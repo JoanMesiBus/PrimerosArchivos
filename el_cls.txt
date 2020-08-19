@@ -1,0 +1,577 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{tesis}
+\newif\ifkeys\keysfalse
+\newif\iftxfonts\txfontsfalse
+\newif\ifdosguias\dosguiasfalse
+\newif\iflogo\logofalse
+\newif\ifpropuesta\propuestafalse
+\newif\ifcivil\civilfalse
+\newif\ifejecucion\ejecucionfalse
+\DeclareOption{keys}{\keystrue}
+\DeclareOption{civil}{\civiltrue}
+\DeclareOption{ejecucion}{\ejecuciontrue}
+\DeclareOption{txfonts}{\txfontstrue}
+\DeclareOption{dosguias}{\dosguiastrue}
+\DeclareOption{logo}{\logotrue}
+\DeclareOption{nologo}{\logofalse}
+\DeclareOption{propuesta}{\propuestatrue}
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
+\ProcessOptions\relax
+\LoadClass[oneside,10pt,letter,fullpage]{book}
+\usepackage{framed, color}
+\definecolor{shadecolor}{rgb}{1,0.8,0.3}
+\RequirePackage[spanish]{babel}
+\usepackage{ragged2e} 
+\usepackage{setspace}
+\usepackage{graphicx}
+%\usepackage{subfigure}
+%\usepackage{titlesec}
+\RequirePackage[utf8x]{inputenc}
+% \RequirePackage[latin1]{inputenc}
+% \RequirePackage[T1]{fontenc}
+% \RequirePackage{lmodern}
+%\ifkeys\RequirePackage[notref,notcite]{showkeys}\fi
+%--------Configuracion de header y footer
+\RequirePackage{fancybox}
+\RequirePackage{fancyhdr}
+\RequirePackage{float}
+%--------Simbolos y fuentes
+\RequirePackage{amstext}
+\RequirePackage{amssymb,latexsym}
+\RequirePackage{amsfonts}
+\RequirePackage{stmaryrd}
+\RequirePackage{amssymb,latexsym}
+\RequirePackage{amsmath}
+\RequirePackage{amsthm}
+\RequirePackage{marvosym}
+\RequirePackage{textcomp}
+\RequirePackage{mathcomp}
+\RequirePackage{marvosym} %Simbolos de caritas
+\RequirePackage{upgreek}
+\iftxfonts\RequirePackage{txfonts}\fi
+%-------Entornos, figuras
+\RequirePackage{verbatim}
+\RequirePackage{fancyvrb}
+\RequirePackage{enumerate}
+%-------Imagenes GNU Plot
+\RequirePackage{graphicx}
+\RequirePackage{epsf}
+\RequirePackage{psfrag}
+\RequirePackage{epic,eepic} % para imagenes
+%\RequirePackage{subfigure}
+\usepackage{subcaption}
+%\usepackage[subfigure]{tocloft}
+%\RequirePackage{color}
+%-------Referencias
+\RequirePackage{hyperref}
+\RequirePackage{url} %citacion de URL
+\RequirePackage[all]{hypcap}
+%--------Tablas
+%\RequirePackage{colortbl} % Darle color a las tablas
+\RequirePackage{multirow} % Multiples filas en Tablas
+\RequirePackage{array}
+\RequirePackage{caption}
+\captionsetup[table]{position=top,belowskip=4pt,aboveskip=4pt}
+\RequirePackage{longtable} % Para cortar tablas grandes
+\RequirePackage{lscape}
+%--------Apendice y tabla de contenidos
+\RequirePackage{appendix}
+
+\RequirePackage[nottoc]{tocbibind}
+
+%%%%
+
+%--------Algoritmos
+\RequirePackage[ruled,algochapter,linesnumbered]{algorithm2e}
+\renewcommand{\algorithmcfname}{Algoritmo}%
+\RequirePackage{algorithmic}
+\setlength{\algomargin}{1em}
+\renewcommand{\algorithmicrequire}{\textbf{Entrada:}}
+\renewcommand{\algorithmicensure}{\textbf{Salida:}}
+\renewcommand{\algorithmiccomment}[1]{//#1}
+%--------Concion indice de algoritmos
+\renewcommand{\listofalgorithms}{
+	\begingroup
+	\tocfile{\'Indice de Algoritmos}{loa}
+	\endgroup
+}
+%--------Numeracion
+%\RequirePackage{thesis_em}
+\makeatletter
+\def\@roman#1{\romannumeral #1}
+\makeatother
+
+\makeatletter
+\let\l@algorithm\l@figure
+\makeatother 
+
+%--------Listing de código
+\RequirePackage{listings} % For insert code in the paper
+\usepackage{color}
+\definecolor{gray97}{gray}{.97}
+\definecolor{gray75}{gray}{.75}
+\definecolor{gray45}{gray}{.45}
+% minimizar fragmentado de listados
+\lstnewenvironment{listing}[1][]
+	{\lstset{#1}\pagebreak[0]}
+	{\pagebreak[0]}
+\lstdefinestyle{consola}
+{
+	basicstyle=\scriptsize\bf\ttfamily,
+	backgroundcolor=\color{gray75},
+}
+%--------Bibliografia
+%\RequirePackage{apa}
+%\RequirePackage{natbib}
+%\RequirePackage{tocbibind} % Agregar referencias al índice
+%\RequirePackage[fixlanguage]{babelbib}
+%\selectbiblanguage{spanish}
+%\bibpunct{[}{]}{;}{}{,}{,}
+\setcounter{secnumdepth}{3} %Mostrar numeración en las subsubsecciones
+\setcounter{tocdepth}{2} %Mostrar las subsubsecciones en el índice
+%--------Teoremas, definiciones, ejemplos, lemas, etc
+%================================================================
+% Notaciones Generales
+%================================================================
+\newcommand{\textrev}[1]{\textbf{#1}}
+\newcommand{\emphrule}[1]{\emph{#1}}
+\newcommand{\normlen}[1]{\ensuremath{\left |#1\right |}}
+%----------------------------------------------------------------
+\newcommand\ie{i.e.\@\xspace}
+\newcommand\eg{e.g.\@\xspace}
+\newcommand\cf{cf.\@\xspace}
+\newcommand\ds{\slash\hspace*{-.6ex}\slash}
+\newcommand{\bra}[1]{[\hspace{-.4ex}[#1]\hspace{-.4ex}]}
+%----------------------------------------------------------------
+% Notaciones para mi tesis
+
+%================================================================
+% Definición del estilo del header y footer
+%================================================================
+ 
+ 
+ % texto izquierda de la cabecera
+%\lhead{\chaptername \hapter. \chaptermark}
+%\chead{}
+%\rhead{}
+%\cfoot{}
+%%\fancyheadoffset[RE,RO]{0cm}
+% Cambios al default de spanish
+%\deactivatetilden
+%\decimalpoint
+% Headings
+%\markboth{}{}
+% Renombre de los titulos por defecto
+
+\usepackage{tocloft}
+\renewcommand{\cftfigfont}{Figura }
+\renewcommand{\cfttabfont}{Tabla }
+\renewcommand{\cftfigaftersnum}{.}%
+%\setlength{\cftfignumwidth}{30pt}
+\renewcommand\cftloftitlefont{\fontsize{14}{1}\bfseries\MakeUppercase}
+\renewcommand\cfttoctitlefont{\fontsize{14}{1}\bfseries\MakeUppercase}
+\renewcommand\cftlottitlefont{\fontsize{14}{1}\bfseries\MakeUppercase}
+\setlength\cftaftertoctitleskip{1pt}
+\makeatletter
+\g@addto@macro\@cfttocfinish{\clearpage}
+\makeatother
+
+%\usepackage{etoolbox}
+%\let\oldlistoffigures\listoffigures
+
+
+\addtocontents{lof}{\vspace{-1.5cm}} 
+\setlength\cftbeforetoctitleskip{0.2cm}
+\setlength\cftbeforeloftitleskip{0.2cm}
+\setlength\cftbeforelottitleskip{0.2cm}
+%\addtolength{\cftsecnumwidth}{50pt}
+% Remove indent
+%\setlength\cftsecindent{0pt}
+%\setlength\cftsubsecindent{0pt}
+%\setlength\cftsubsubsecindent{0pt}
+
+% increase numwidth
+%\setlength\cftchapnumwidth{3em}
+%\setlength\cftsecnumwidth{3em}
+%\setlength\cftsubsecnumwidth{3em}
+%\setlength\cftsubsubsecnumwidth{3em}
+
+
+\addto\captionsspanish
+{
+	\def\bibname{Referencias}
+	\def\contentsname{Tabla de Contenido}
+	\def\listfigurename{\'Indice de Figuras}
+	\def\listtablename{\'Indice de Tablas}
+	\def\listalgorithmname{\'Indice de Algoritmos}
+	%\def\appendixname{Ap\'endice}
+	\def\appendixname{Anexo}
+	\def\tablename{Tabla}
+	\def\figurename{Fig.}
+	\def\chaptername{Cap\'itulo}
+}
+\usepackage[labelsep=period]{caption}
+
+\renewcommand{\appendixname}{Anexo}
+\renewcommand{\appendixtocname}{Anexos}
+\renewcommand{\appendixpagename}{Anexo}
+%--------Header de los capitulos
+% by Emir
+\usepackage[compact]{titlesec}
+%\assignpagestyle{\chapter}{\fancyfoot[C]{\thepage}}
+\usepackage{etoolbox}
+
+\makeatletter
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}
+%\makeatother
+
+
+\titleformat{\chapter}
+{\bfseries\Large\vspace*{-3.0cm}} %Formato título %2
+{ % Contenido de la etiqueta
+%	\filright
+	\Large\MakeUppercase\chaptertitlename\ \thechapter.\ 
+} %Contenido de la et iqueta
+{0pt} % espacio mínimo entre etiqueta y cuerpo
+{\filright\MakeUppercase} %código que precede al cuerpo del título
+[\vspace{1.5pt}] %1,5
+
+\titleformat{\section}
+{\bfseries\normalsize\vspace{4pt}}%4
+{\normalsize\MakeUppercase\thesection\ \vspace{1pt} } % 3 espacios luego del titulo de una seccion
+{0pt}
+{\MakeUppercase}
+[\vspace*{0cm}]%%0.5
+
+\titleformat{\subsection}
+{\bfseries\normalsize\vspace{4pt}}
+{\hspace{1cm}\normalsize\thesubsection\ }
+{0pt}
+{\vspace*{0cm}}%%0.5
+
+\titleformat{\subsubsection}
+{\bfseries\normalsize\vspace{4pt} }
+{\hspace{2cm}\normalsize\thesubsubsection\ }
+{0pt}
+{\vspace*{0cm}}%%0.5
+
+\setcounter{secnumdepth}{5}% Display enumeration up to \subparagraph (level 5)
+\renewcommand{\theparagraph}{\thesubsubsection.\arabic{paragraph}}
+\renewcommand{\thesubparagraph}{\theparagraph.\arabic{subparagraph}}
+
+\titleformat{\paragraph}
+{\bfseries\normalsize}
+{\hspace{3cm}\normalsize\theparagraph\ }
+{0pt}
+{\vspace*{0cm}}%%0.5
+\begin{comment}
+\titleformat{\subsubsection}
+{\itshape\normalsize\vspace{1.0cm}}
+{\itshape\thesubsubsection\ }
+{0pt}
+{\vspace*{0.5cm}\itshape}
+
+\titleformat{\paragraph}
+{\itshape\normalsize\vspace{1.0cm}}
+{\itshape\theparagraph\ }
+{0pt}
+{\vspace*{0.5cm}\itshape}
+\end{comment}
+
+\titlespacing*{\chapter} {0pt}{80pt}{6pt} %%%0 80 60
+\titlespacing*{\section} {0pt}{20pt}{6pt}%%{0pt}{6.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}
+\titlespacing*{\subsection} {0pt}{6.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}
+\titlespacing*{\subsubsection}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\titlespacing*{\paragraph} {0pt}{3.25ex plus 1ex minus .2ex}{1em}
+\titlespacing*{\subparagraph} {\parindent}{3.25ex plus 1ex minus .2ex}{1em}
+
+%--------Margenes segun reglamento: izq=inf=3cm y sup=der=2cm
+%\RequirePackage[letterpaper,nohead,nofoot]{geometry}
+% Estos margenes estan considerando la diferencia entre
+% los formatos A4 y Letter (carta)
+%\geometry{top=0cm, bottom=0cm, left=0cm, right=0cm}
+%--------Otros margenes
+\setlength{\parindent}{1cm}%2cm Tabulación
+\setlength{\headsep}{0.0cm}
+%\addtolength{\textwidth}{15.10cm}
+%\setlength{\voffset}{0.3cm}
+%\setlength{\hoffset}{3in}
+\setlength{\footskip}{1.0cm}%%num pag espace
+%--------Evitar que corte las palabras al final
+\setlength{\pretolerance}{2000}
+\setlength{\tolerance}{3000}
+%--------pagina en blanco
+\newcommand{\paginaenblanco}{\newpage{\pagestyle{empty}\cleardoublepage}}
+%--------Referenciacion en la forma: 1-5
+\newcommand{\lref}[2]{\ref{#1}--\ref{#2}}
+%--------Referenciacion en la forma:  (1)
+\newcommand{\cref}[1]{(\ref{#1})}
+%--------Referenciacion en la forma:  (1)-(5)
+\newcommand{\clref}[2]{(\ref{#1})--(\ref{#2})}
+%--------Otras referencias
+\newcommand{\oRef}[1]{Ref.\ \cite{#1}}
+\newcommand{\dRef}[2]{Refs.\ \cite{#1},\cite{#2}}
+%================================================================
+% Comandos matematicos
+%================================================================
+% Parte real e imaginaria
+\newcommand{\Real}{\mbox{Re }}
+\newcommand{\Imag}{\mbox{Im }}
+% Mayor/menor o igual y aproximado
+\newfont{\msamfnt}{msam10}
+\newcommand{\msam}[1]{\mbox{ \msamfnt #1}\ }
+\newcommand{\simgeq}{\msam \&}
+\newcommand{\simleq}{\msam .}
+%--------Abreviaciones
+\newcommand{\Capt}[1]{Cap.\ \ref{#1}}
+\newcommand{\Fig}[1]{Fig.\ \ref{#1}}
+\newcommand{\Sec}[1]{Sec.\ \ref{#1}}
+%--------Otros
+\newcommand{\salto}{\vspace{.5cm}}
+
+%================================================================
+% Caratula y Portada
+%================================================================
+%--------Comandos
+\def\@title{} \def\@autor{} \def\@fecha{} \def\@profesorguia{} \def\@profesorcoguia{}
+\def\@ciudad{} \def\@pais{} \def\@run{} \def\@telefono{} \def\@email{} \def\@annoingreso{}
+\newcommand{\keywords}[1]{\def\keywords{#1}}
+\def\titulo#1{\gdef\@title{\begin{center}{#1}%
+\end{center}}\gdef\@titleMay{\begin{center}{{#1}}%
+\end{center}}}
+\def\autor#1{\gdef\@autor{{\bfseries #1}}\gdef\@autorn{#1}}
+\def\fecha#1#2#3#4{\gdef\@diasemana{#1}\gdef\@diaexamen{#2}\gdef\@mesexamen{#3}%
+\gdef\@annoexamen{#4}\gdef\@fecha{#3, #4}}
+\def\profesorguia#1{\gdef\@profesorguia{#1}}
+\def\profesorcoguia#1{\gdef\@profesorcoguia{#1}}
+\def\regular#1{\gdef\@regular{#1}}
+\def\externo#1{\gdef\@externo{#1}}
+\def\presidente#1{\gdef\@presidente{#1}}
+\def\ciudad#1{\gdef\@ciudad{#1}}
+\def\pais#1{\gdef\@pais{#1}}
+\def\run#1{\gdef\@run{#1}}
+\def\telefono#1{\gdef\@telefono{#1}}
+\def\email#1{\gdef\@email{#1}}
+\def\annoingreso#1{\gdef\@annoingreso{#1}}
+%--------Información del documento PDF
+\hypersetup
+{
+	bookmarksopen, bookmarksnumbered, pdfdisplaydoctitle=true,
+	pdfborder=false,
+	pdftitle=\@title,
+	pdfauthor=\@autor,
+	pdfsubject=Trabajo de T\'itulo,
+	pdfkeywords=,
+	pdfcreator=Universidad de Santiago de Chile,
+	pdfproducer=M. Uriarte,
+	colorlinks=true,
+	% linkcolor=red,
+	% citecolor=green,
+	% filecolor=magenta,
+	% urlcolor=cyan,
+	linkcolor=black,
+	citecolor=black,
+	filecolor=black,
+	urlcolor=black,
+	linkbordercolor={1 0 0},
+	citebordercolor={0 1 0}
+}
+%-------Cubierta
+\newcommand{\makecubierta}
+{
+\iflogo
+\hspace*{-1.5cm}
+	\vspace*{0cm}
+	\begin{picture}(18,4)(0,40)
+		\put(365,-80){\includegraphics[scale=.25]{Imagenes_Template/LogoUsach.pdf}}
+	\end{picture}
+\fi
+
+\sloppy
+\thispagestyle{empty}
+\vspace*{-1.6cm}
+%\onehalfspace
+\vspace{3.1cm}
+\begin{center}
+\begin{tabular}{cl}
+		
+		\vspace*{1.5pt}{\fontsize{14}{1.5}\selectfont{\bf UNIVERSIDAD DE SANTIAGO DE CHILE}}&  \\\
+		\textbf{\fontsize{12}{1.5}\selectfont FACULTAD DE INGENIERÍA} &\\   \vspace*{1.5pt}
+		\textbf{\fontsize{12}{1.5}\selectfont Departamento de Ingeniería Eléctrica}  &\\
+	\end{tabular}
+\end{center}
+
+
+\ifpropuesta % si se trata de la propuesta
+	\vspace*{5cm}
+	\@titleMay\par
+	\vspace{1cm}
+	\begin{center}
+	\large
+	\ifcivil
+		{
+			Propuesta de Trabajo de T\'itulo para Ingeniero Civil en Electricidad}
+	\fi
+	\ifejecucion
+		{Propuesta de Trabajo de T\'itulo para Ingeniero de Ejecuci\'on en Electricidad}
+	\fi
+	\end{center}
+	\vspace{1.5cm}
+	\begin{flushright}
+		\begin{tabular}[t]{l l}
+			Nombre: & \@autorn \\
+			R.U.T.: & \@run \\
+			A\~no Ingreso: & \@annoingreso \\
+			Tel\'efono: & \@telefono \\
+			E-mail: & \@email \\
+			\ifdosguias Profesor: \else Profesor: \fi &
+			\ifdosguias
+				{\normalfont \@profesorguia} \\ 
+				 \\
+			\else
+				\@profesorguia \\
+			\fi
+		\end{tabular}
+	\end{flushright}
+	\begin{center}
+		\vspace{1.5cm}
+		\@diasemana, \@diaexamen\ de \@mesexamen\ de \@annoexamen
+	\end{center}
+\else % si se trata del documento final
+	\vspace*{4.6cm}
+	\@titleMay %par
+	\vspace{1cm}
+	{
+		\large
+		\begin{center}
+		\vspace*{1cm}
+		\iflogo
+			{\bf{{\fontsize{10pt}{1pt}\@autor}}}\\[1cm]%\MakeUppercase
+		\else
+			{\bf\MakeUppercase{\@autor}}\\[1.5cm]
+		\fi
+
+		%Datos profesor(es)
+		\vspace*{1.6cm}
+		
+%		\begin{center}
+		\normalsize
+		%\justify
+		%\hspace{7.3cm} 
+		{Profesor: {{\@profesorguia}}}\\
+		\ifdosguias
+			\hspace{7.5cm} \textbf{Profesor Co-guía: {{\@profesorcoguia}}}\\
+		\fi
+		\vspace{1cm}
+	
+% 		\begin{flushright}
+% 		\setstretch{1.5}
+% 			\begin{minipage}[b]{0.51\textwidth} 
+				
+% 				\ifcivil
+% 			%	Proyecto de Tesis para la obtención del
+% 			%	Grado de Magíster en Ciencias de la
+% 			%	Ingeniería, Mención Ingeniería Eléctrica
+% % 			{\justify	\fontsize{10}{1.5}\selectfont{{Trabajo de Titulación presentado  en conformidad a los requisitos para obtener el Título de Ingeniero Civil en Electricidad}}}
+% 			\fi
+% 				\ifejecucion
+% 				\fontsize{10}{1.5}\selectfont{Trabajo de Titulación presentado  en conformidad a los requisitos para obtener el Título de Ingeniero de Ejecución en Electricidad}
+% 				\fi 
+% 			\end{minipage} 
+		
+% 		\end{flushright}  
+		
+%		\end{flushleft}
+
+		\vspace*{1.5cm}
+		\normalsize{\@ciudad\ -- \@pais}\\%MakeUppercase
+		\@annoexamen
+		\end{center}\par
+		\iflogo \vspace{.9cm} \else \vspace{1cm} \fi
+	}
+\fi
+} %\\end \makecubierta
+%-------Copyright
+% by mug
+\newcommand{\makecopyright}
+{
+	\ifpropuesta
+		% no va copyright
+	\else
+		\thispagestyle{empty}
+		\vspace*{17.5cm}\par
+		\begin{flushleft}
+		\copyright\ {\normalfont{\@autor}}, \@annoexamen \\
+		\vspace*{0.5cm}
+		\end{flushleft}
+		
+		%Se autoriza la reproducción parcial o total de esta obra, con fines académicos, por cualquier forma, medio o procedimiento, siempre y cuando se incluya la cita bibliográfica del documento.
+		%Queda prohibida la reproducción parcial o total de esta obra en cualquier forma, medio o procedimiento sin permiso por escrito del autor.
+		\begin{picture}(0,4)(0,40)
+		\put(-12,40){\includegraphics[scale=0.5]{Imagenes_Template/derech.png}}
+		\end{picture}
+		\hspace{1.5cm} $ \cdot $ \ Algunos derechos reservados.
+		Esta obra está bajo una Licencia Creative Commons
+		Atribución-NoComercial-Compartir Igual
+		3.0. Sus condiciones de uso pueden ser revisadas
+		en: $<$http://creativecommons.org/licenses/bync-sa/3.0/cl/$>$.
+		
+	\fi
+}
+%------Página de dedicatoria
+\newenvironment{dedicatoria}[1]
+{
+	%\thispagestyle{empty}
+	\vspace*{18cm}\par
+	\hspace*{5cm}
+	\begin{flushright}
+	\textit{#1}
+	\end{flushright}
+}{}
+%------Página de agradecimientos
+\newenvironment{gracias}
+{
+	\begin{center}
+		{\Large\bf AGRADECIMIENTOS}
+	\end{center}
+}{}
+%------Página de resumen (castellano)
+\newcommand{\KeywordsES}[1]
+{
+	\par\noindent
+	{\bf Palabras Claves\/}: #1
+}
+\newcommand{\resumenCastellano}[1]
+{
+	\begin{center}
+		{\Large\bf RESUMEN}
+	\end{center}
+
+#1
+\setlength{\parindent}{1cm}%%sangría doc
+}
+%------Página de abstract (ingles)
+\newcommand{\KeywordsEN}[1]
+{
+	\par\noindent
+	{\bf Keywords\/}: #1
+	\setlength{\parindent}{1cm}%%sangría doc
+}
+\newcommand{\resumenIngles}[1]
+{
+	\begin{center}
+		{\Large\bf ABSTRACT}
+	\end{center}
+#1
+\setlength{\parindent}{1cm}%%sangría doc
+}
+%------Página de glosario
+\newenvironment{glosario}
+{
+	\begin{center}
+		\textbf{\Large GLOSARIO}
+	\end{center}
+}{}
+
+\endinput
